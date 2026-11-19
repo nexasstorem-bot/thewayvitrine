@@ -1,0 +1,302 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Vitrine Cartoon</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap">
+<style>
+  /* Layout: site de loja com visual adulto. Topo com letreiro e WhatsApp, toldo, grade de 3 vitrines com camisa giratória, rodapé de atendimento. */
+  :root {
+    --page: #e7eaee;
+    --ink: #1d2433;
+    --muted: #5a6475;
+    --wall: #cfd6df;
+    --floor-a: #bcc5d0;
+    --floor-b: #aeb8c5;
+    --accent: #1f6f50;
+    --paper: #f8f9fb;
+    --line: #1d2433;
+    --font-display: "Outfit", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Outfit", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--page); }
+  body {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.5;
+    padding-block: 18px 40px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .wrap { width: min(100%, 1000px); margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+
+  /* Topo */
+  .top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+  .sign {
+    background: var(--ink); color: #fff; border-radius: 12px; padding: 8px 18px 7px;
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(18px, 4.5vw, 24px); letter-spacing: .04em; line-height: 1.1;
+    overflow-wrap: anywhere;
+  }
+  .sign small { display: block; font-weight: 400; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; opacity: .7; margin-top: 2px; }
+
+  /* Botões */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: var(--font-display); font-weight: 600; font-size: 16px; line-height: 1; color: #fff; text-decoration: none;
+    background: var(--accent); border: 0; border-radius: 999px; padding: 13px 22px; cursor: pointer;
+    transition: transform .12s, filter .12s;
+  }
+  .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+
+  /* Hero */
+  .hero { display: flex; flex-direction: column; }
+  .awning { display: block; width: 100%; height: auto; }
+  .hero-body {
+    background: var(--paper); border: 2px solid var(--line); border-top-width: 0; border-radius: 0 0 18px 18px;
+    padding: 22px clamp(16px, 4vw, 32px) 26px; margin-top: -3px; text-align: center;
+  }
+  .hero h1 { margin: 0 0 6px; font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 6vw, 42px); line-height: 1.08; letter-spacing: -.01em; text-wrap: balance; }
+  .hero p { margin: 0 auto; max-width: 46ch; font-size: 17px; color: var(--muted); text-wrap: balance; }
+
+  /* Grade de peças */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; align-items: start; }
+  .card { display: flex; flex-direction: column; background: var(--paper); border: 2px solid var(--line); border-radius: 18px; overflow: hidden; min-width: 0; }
+
+  .stage {
+    position: relative; aspect-ratio: 1 / 1.1; display: grid; place-items: center; overflow: hidden;
+    border-bottom: 2px solid var(--line); cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; outline: none;
+    background: linear-gradient(180deg, #d9dfe7 0%, var(--wall) 100%);
+  }
+  .stage.grab { cursor: grabbing; }
+  .stage:focus-visible { box-shadow: inset 0 0 0 3px var(--accent); }
+  .stage::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 12%;
+    border-top: 2px solid var(--line);
+    background: repeating-linear-gradient(90deg, var(--floor-a) 0 46px, var(--floor-b) 46px 92px);
+  }
+  .shadow { position: absolute; left: 50%; bottom: 7%; width: 42%; height: 4%; margin-left: -21%; border-radius: 50%; background: rgba(29,36,51,.22); z-index: 1; }
+  .bob { position: relative; z-index: 2; width: 62%; aspect-ratio: 100 / 120; perspective: 800px; margin-top: -6%; animation: float 3.4s ease-in-out infinite; }
+  @keyframes float { 50% { transform: translateY(-4px); } }
+  .spin { position: absolute; inset: 0; transform-style: preserve-3d; }
+  .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .face.back { transform: rotateY(180deg); }
+  .face svg { width: 100%; height: 100%; display: block; overflow: visible; pointer-events: none; }
+  .ln { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .eye { transform-box: fill-box; transform-origin: center; animation: blink 4.8s infinite; }
+  @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+
+  .hintpill {
+    position: absolute; z-index: 3; top: 12px; left: 50%; transform: translateX(-50%);
+    background: rgba(248,249,251,.92); border: 1.5px solid var(--line); border-radius: 999px; padding: 4px 13px;
+    font-weight: 600; font-size: 12px; letter-spacing: .04em; white-space: nowrap; pointer-events: none; transition: opacity .3s;
+  }
+  .hintpill.gone { opacity: 0; }
+
+  .info { display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 20px; }
+  .card h2 { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 22px; line-height: 1.15; }
+  .card p { margin: 0 0 4px; font-size: 15px; color: var(--muted); }
+  .card .btn { width: 100%; font-size: 15px; padding-inline: 14px; }
+
+  /* Rodapé */
+  .foot { background: var(--ink); color: #fff; border-radius: 18px; padding: 24px clamp(16px, 4vw, 32px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  .foot h2 { margin: 0 0 2px; font-family: var(--font-display); font-weight: 600; font-size: clamp(21px, 4.5vw, 28px); line-height: 1.15; }
+  .foot p { margin: 0; font-size: 16px; opacity: .8; }
+  .foot .num { font-weight: 600; opacity: 1; }
+  .foot .btn { background: #fff; color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) { .bob, .eye { animation: none; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="sign"><span id="brand">SUA MARCA</span><small id="tagline">coleção teste</small></div>
+    <a class="btn" id="topzap" href="#" target="_blank" rel="noopener"></a>
+  </header>
+
+  <section class="hero">
+    <svg class="awning" id="awning" viewBox="0 0 400 66" aria-hidden="true"></svg>
+    <div class="hero-body">
+      <h1>Nova coleção</h1>
+      <p>Arraste cada camisa para girar e ver os dois lados. Gostou de alguma? Chame no WhatsApp e pergunte tudo.</p>
+    </div>
+  </section>
+
+  <section class="grid" id="grid" aria-label="Camisas"></section>
+
+  <footer class="foot">
+    <div>
+      <h2>Ficou com dúvida?</h2>
+      <p>Tamanhos, valores e como comprar: tudo pelo WhatsApp, <span class="num" id="footnum"></span>.</p>
+    </div>
+    <a class="btn" id="footzap" href="#" target="_blank" rel="noopener"></a>
+  </footer>
+</div>
+
+<script>
+  /* Edite aqui: nome da marca, número do WhatsApp (com 55 + DDD, só dígitos) e as peças. */
+  var CONFIG = {
+    brand: "SUA MARCA",
+    tagline: "coleção teste",
+    whatsapp: "5521987397675",
+    whatsappLabel: "+55 21 98739-7675",
+    shirts: [
+      { name: "Camisa Sol",   cor: "amarela", color: "#d9a847", desc: "Alegre e cheia de energia." },
+      { name: "Camisa Coral", cor: "coral",   color: "#d98473", desc: "A cor que chama atenção." },
+      { name: "Camisa Menta", cor: "verde menta", color: "#8fb8a6", desc: "Leve, fresca e fácil de combinar." }
+    ]
+  };
+
+  var INK = "#1d2433";
+  var ZAP_LIGHT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.4-4.2A8.5 8.5 0 1 1 8.3 18.7L4 20Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.2 8.6c.3 2.9 2.6 5.2 5.6 6l1.3-1.4-2-1-.9.8c-.9-.4-1.7-1.2-2.1-2.1l.8-.9-1-2-1.7.6Z" fill="currentColor"/></svg>';
+
+  function wa(msg) { return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg); }
+
+  document.getElementById("brand").textContent = CONFIG.brand;
+  document.getElementById("tagline").textContent = CONFIG.tagline;
+  document.getElementById("footnum").textContent = CONFIG.whatsappLabel;
+  var generic = "Oi! Vim pelo site da " + CONFIG.brand + " e queria saber mais sobre as camisas.";
+  ["topzap", "footzap"].forEach(function (id) {
+    var a = document.getElementById(id);
+    a.href = wa(generic);
+    a.innerHTML = ZAP_LIGHT + "<span>Chamar no WhatsApp</span>";
+  });
+
+  /* Toldo listrado, tons de azul-petróleo e off-white */
+  (function () {
+    var svg = document.getElementById("awning"), out = "", n = 8, w = 400 / n;
+    for (var i = 0; i < n; i++) {
+      var x = i * w, c = i % 2 ? "#f1f3f6" : "#26405f";
+      out += '<path d="M' + x + ' 2 H' + (x + w) + ' V38 A' + (w / 2) + ' ' + (w / 2) + ' 0 0 1 ' + x + ' 38 Z" fill="' + c + '" stroke="' + INK + '" stroke-width="2.5" stroke-linejoin="round"/>';
+    }
+    svg.innerHTML = out;
+  })();
+
+  function star(cx, cy, ro, ri) {
+    var d = "";
+    for (var i = 0; i < 10; i++) {
+      var r = i % 2 ? ri : ro, a = -Math.PI / 2 + i * Math.PI / 5;
+      d += (i ? "L" : "M") + (cx + r * Math.cos(a)).toFixed(1) + " " + (cy + r * Math.sin(a)).toFixed(1);
+    }
+    return d + "Z";
+  }
+
+  var BODY = "M30 32 10 44l8 18 10-6v56h44V56l10 6 8-18-20-12";
+  var HANGER = '<path class="ln" d="M50 6c-5 0-8 5-5 9l5 4"/><path class="ln" d="M50 19 24 37M50 19 76 37"/>';
+
+  function frontSVG(c, i) {
+    var dl = (i * 0.9) + "s";
+    return '<svg viewBox="0 0 100 120" aria-hidden="true">' + HANGER +
+      '<path class="ln" style="fill:' + c + '" d="' + BODY + 'Q50 46 30 32Z"/>' +
+      '<path class="ln" style="stroke-width:2.5" d="M37 33Q50 43 63 33"/>' +
+      '<path d="M33 64v24" style="stroke:#fff;stroke-opacity:.4;stroke-width:4;stroke-linecap:round"/>' +
+      '<g class="eye" style="animation-delay:' + dl + '"><circle cx="41" cy="72" r="5.5" fill="#fff" stroke="' + INK + '" stroke-width="2.5"/><circle cx="42" cy="73" r="2.4" fill="' + INK + '"/></g>' +
+      '<g class="eye" style="animation-delay:' + dl + '"><circle cx="59" cy="72" r="5.5" fill="#fff" stroke="' + INK + '" stroke-width="2.5"/><circle cx="60" cy="73" r="2.4" fill="' + INK + '"/></g>' +
+      '<path class="ln" style="stroke-width:3" d="M43 84Q50 90 57 84"/>' +
+      '</svg>';
+  }
+
+  function backSVG(c) {
+    var tl = Math.min(44, Math.max(18, CONFIG.brand.length * 5.2));
+    return '<svg viewBox="0 0 100 120" aria-hidden="true">' + HANGER +
+      '<path class="ln" style="fill:' + c + '" d="' + BODY + 'Q50 38 30 32Z"/>' +
+      '<path d="' + BODY + 'Q50 38 30 32Z" fill="' + INK + '" opacity=".1"/>' +
+      '<path class="ln" style="stroke-width:2.5" d="M34 32Q50 40 66 32"/>' +
+      '<rect x="44" y="38" width="12" height="7" rx="1.5" fill="#fff" stroke="' + INK + '" stroke-width="2"/>' +
+      '<path d="M33 64v24" style="stroke:#fff;stroke-opacity:.3;stroke-width:4;stroke-linecap:round"/>' +
+      '<path d="' + star(50, 70, 13, 5.5) + '" fill="#f1f3f6" stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"/>' +
+      '<text x="50" y="98" text-anchor="middle" textLength="' + tl + '" lengthAdjust="spacingAndGlyphs" font-family="Outfit, Avenir Next, sans-serif" font-weight="700" font-size="9" fill="' + INK + '">' + CONFIG.brand.replace(/&/g, "&amp;").replace(/</g, "&lt;") + '</text>' +
+      '</svg>';
+  }
+
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var grid = document.getElementById("grid");
+
+  var cards = CONFIG.shirts.map(function (d, i) {
+    var art = document.createElement("article");
+    art.className = "card";
+    art.innerHTML =
+      '<div class="stage" tabindex="0" role="group" aria-label="' + d.name + ': arraste para girar">' +
+        '<div class="hintpill">&#8596; arraste para girar</div>' +
+        '<div class="shadow"></div>' +
+        '<div class="bob"><div class="spin"><div class="face front">' + frontSVG(d.color, i) + '</div><div class="face back">' + backSVG(d.color) + '</div></div></div>' +
+      '</div>' +
+      '<div class="info">' +
+        '<h2></h2><p></p>' +
+        '<a class="btn" target="_blank" rel="noopener"></a>' +
+      '</div>';
+    art.querySelector("h2").textContent = d.name;
+    art.querySelector("p").textContent = d.desc + " Tamanhos e valores: pergunte no WhatsApp.";
+    var a = art.querySelector(".btn");
+    a.href = wa("Oi! Vi a " + d.name + " (" + d.cor + ") no site da " + CONFIG.brand + " e queria saber mais: tamanhos, valor e como comprar.");
+    a.innerHTML = ZAP_LIGHT + "<span>Perguntar no WhatsApp</span>";
+    grid.appendChild(art);
+    return {
+      stage: art.querySelector(".stage"), spin: art.querySelector(".spin"), shadow: art.querySelector(".shadow"),
+      hint: art.querySelector(".hintpill"),
+      angle: 0, vel: 0, target: 0, drag: false, lastX: 0, lastT: 0
+    };
+  });
+
+  cards.forEach(function (c) {
+    var st = c.stage;
+    st.addEventListener("pointerdown", function (e) {
+      st.setPointerCapture(e.pointerId);
+      c.drag = true; c.lastX = e.clientX; c.lastT = e.timeStamp; c.vel = 0;
+      st.classList.add("grab");
+      c.hint.classList.add("gone");
+    });
+    st.addEventListener("pointermove", function (e) {
+      if (!c.drag) return;
+      var dx = e.clientX - c.lastX, dt = (e.timeStamp - c.lastT) / 1000;
+      c.angle += dx * 0.9;
+      if (dt > 0.001) c.vel = c.vel * 0.5 + (dx * 0.9 / dt) * 0.5;
+      c.lastX = e.clientX; c.lastT = e.timeStamp;
+    });
+    function release(e) {
+      if (!c.drag) return;
+      c.drag = false; st.classList.remove("grab");
+      if (e.timeStamp - c.lastT > 90) c.vel = 0;
+      c.vel = Math.max(-1400, Math.min(1400, c.vel));
+      c.target = Math.round((c.angle + c.vel * 0.18) / 180) * 180;
+    }
+    st.addEventListener("pointerup", release);
+    st.addEventListener("pointercancel", release);
+    st.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        e.preventDefault();
+        c.hint.classList.add("gone");
+        c.target = Math.round(c.angle / 180) * 180 + (e.key === "ArrowRight" ? 180 : -180);
+      }
+    });
+  });
+
+  var last = performance.now();
+  function frame(now) {
+    var dt = Math.min((now - last) / 1000, 0.033);
+    last = now;
+    cards.forEach(function (c) {
+      if (!c.drag) {
+        /* mola levemente saltitante: ao soltar, a camisa assenta de frente ou de costas */
+        var acc = (c.target - c.angle) * 130 - c.vel * 13;
+        c.vel += acc * dt;
+        c.angle += c.vel * dt;
+        if (Math.abs(c.target - c.angle) < 0.05 && Math.abs(c.vel) < 1) { c.angle = c.target; c.vel = 0; }
+      }
+      var cos = Math.cos(c.angle * Math.PI / 180);
+      c.spin.style.transform = "rotateY(" + c.angle.toFixed(2) + "deg)";
+      c.shadow.style.transform = "scaleX(" + (0.5 + 0.5 * Math.abs(cos)).toFixed(3) + ")";
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  /* Convite inicial: a primeira camisa dá uma girada curta para mostrar que gira */
+  if (!reduce) setTimeout(function () { var c = cards[0]; if (c && !c.drag && c.target === 0 && !c.hint.classList.contains("gone")) { c.vel = 260; } }, 900);
+</script>
+
+</body></html>
