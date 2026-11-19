@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>The Way Store | Coleção teste</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Montserrat:wght@600;800&display=swap">
+<style>
+  :root {
+    --bg: #0d0d0d; --panel: #171717; --panel2: #202020; --gold: #f2c230; --text: #f2f2f0; --muted: #a8a7a1;
+    --line: rgba(242,194,48,.28);
+    --display: "Montserrat", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --body: "Manrope", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color-scheme: dark; box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); background: var(--bg); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); line-height: 1.5;
+    padding: 20px max(16px, env(safe-area-inset-right, 0px)) 44px max(16px, env(safe-area-inset-left, 0px)); }
+  .wrap { width: min(100%, 1040px); margin: 0 auto; display: flex; flex-direction: column; gap: 30px; }
+  .mk { display: block; }
+
+  .top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+  .sign { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+  .sign svg { width: 48px; height: 48px; color: var(--gold); --dash: var(--bg); }
+  .word { font-family: var(--display); font-weight: 800; color: var(--gold); line-height: 1; letter-spacing: .02em; }
+  .word small { display: block; margin-top: 5px; font-weight: 600; color: var(--text); font-size: .36em; letter-spacing: .6em; padding-left: .3em; }
+  .sign .word { font-size: 22px; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; font-family: var(--display); font-weight: 600; font-size: 15px;
+    line-height: 1; color: var(--bg); background: var(--gold); text-decoration: none; border: 0; border-radius: 10px; padding: 14px 22px; cursor: pointer; transition: background .15s; }
+  .btn:hover { background: #ffd24d; }
+  .btn:focus-visible, .seg button:focus-visible, .stage:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+
+  .hero { display: flex; flex-direction: column; }
+  .awning { display: block; width: 100%; height: auto; }
+  .verse { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; height: 64px; overflow: hidden; }
+  .verse-track { position: relative; height: 100%; }
+  .verse span { position: absolute; top: 50%; left: 0; translate: 0 -50%; display: flex; align-items: center; gap: 12px; white-space: nowrap; padding: 0 18px;
+    font-family: var(--display); font-weight: 800; font-size: clamp(18px, 4.2vw, 26px); color: var(--gold); animation: pass 11s ease-in-out infinite alternate; }
+  .verse span svg { width: 30px; height: 30px; flex: none; --dash: var(--panel); }
+  @keyframes pass { from { left: 0; transform: translateX(0); } to { left: 100%; transform: translateX(-100%); } }
+  @media (prefers-reduced-motion: reduce) { .verse span { animation: none; left: 50%; transform: translateX(-50%); } }
+  .hero-body { background: radial-gradient(ellipse 60% 70% at 50% 0, rgba(242,194,48,.12), transparent 70%), var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    padding: 34px clamp(16px, 4vw, 40px) 38px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .hero-body .lock svg { width: clamp(150px, 30vw, 200px); height: auto; aspect-ratio: 1; color: var(--gold); --dash: var(--panel); }
+  .lock { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .lock .word { font-size: clamp(34px, 8vw, 52px); }
+  .hero h1 { margin: 14px 0 0; font-family: var(--display); font-weight: 800; font-size: clamp(24px, 5vw, 34px); line-height: 1.15; text-wrap: balance; }
+  .hero p { margin: 0; max-width: 46ch; font-size: 17px; color: var(--muted); text-wrap: balance; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 24px; align-items: start; }
+  .card { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; min-width: 0; }
+  .stage { position: relative; aspect-ratio: 1 / 1.2; overflow: hidden; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; outline: none;
+    background: radial-gradient(ellipse 75% 60% at 50% 38%, #3b3b3b 0%, #222 52%, #151515 100%); }
+  .stage.grab { cursor: grabbing; }
+  .rail { position: absolute; left: 0; right: 0; top: 5.2%; height: 6px; background: linear-gradient(#8a8a8a, #3a3a3a); box-shadow: 0 5px 8px rgba(0,0,0,.45); z-index: 1; }
+  .stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 12%; z-index: 1;
+    background: linear-gradient(180deg, #2b2b2b, #121212); border-top: 1px solid rgba(255,255,255,.1); }
+  .shadow { position: absolute; left: 50%; bottom: 5.5%; width: 46%; height: 3.2%; margin-left: -23%; border-radius: 50%; background: rgba(0,0,0,.6); filter: blur(7px); z-index: 2; }
+  .bob { position: absolute; z-index: 3; left: 16%; width: 68%; top: 5.2%; aspect-ratio: 300 / 384; perspective: 900px; }
+  .spin { position: absolute; inset: 0; transform-style: preserve-3d; }
+  .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .face.back { transform: rotateY(180deg); }
+  .face svg { width: 100%; height: 100%; display: block; overflow: visible; pointer-events: none; }
+  .hintpill { position: absolute; z-index: 4; bottom: 14px; left: 50%; transform: translateX(-50%); background: rgba(13,13,13,.78); border: 1px solid var(--line);
+    border-radius: 999px; padding: 4px 14px; font-weight: 600; font-size: 12px; color: var(--text); white-space: nowrap; pointer-events: none; transition: opacity .3s; }
+
+  .info { display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 20px; }
+  .card h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 20px; line-height: 1.2; }
+  .card p { margin: 0 0 4px; font-size: 15px; color: var(--muted); }
+  .card .btn { width: 100%; font-size: 14px; }
+
+  .foot { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 26px clamp(16px, 4vw, 34px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  .foot h2 { margin: 0 0 2px; font-family: var(--display); font-weight: 800; font-size: clamp(20px, 4.5vw, 26px); line-height: 1.2; }
+  .foot p { margin: 0; color: var(--muted); }
+  .foot .num { color: var(--text); font-weight: 600; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="wm" viewBox="0 0 120 120"></symbol></defs></svg>
+
+<div class="wrap">
+  <header class="top">
+    <a class="sign" href="#" aria-label="The Way Store">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#wm"/></svg>
+      <span class="word">THE WAY<small>STORE</small></span>
+    </a>
+    <a class="btn" id="topzap" href="#" target="_blank" rel="noopener"></a>
+  </header>
+
+  <div class="verse" role="note" aria-label="Jesus é o caminho">
+    <div class="verse-track"><span><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#wm"/></svg>Jesus é o caminho</span></div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="lock">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Logo The Way Store: cruz e estrada"><use href="#wm"/></svg>
+        <span class="word">THE WAY<small>STORE</small></span>
+      </div>
+      <h1>Coleção teste</h1>
+      <p>É só arrastar cada camisa para ver frente e costas. Gostou de alguma? Chame no WhatsApp e pergunte tudo.</p>
+    </div>
+  </section>
+
+  <section class="grid" id="grid" aria-label="Camisas"></section>
+
+  <footer class="foot">
+    <div>
+      <h2>Ficou com dúvida?</h2>
+      <p>Tamanhos, valores e como comprar: tudo pelo WhatsApp, <span class="num" id="footnum"></span>.</p>
+    </div>
+    <a class="btn" id="footzap" href="#" target="_blank" rel="noopener"></a>
+  </footer>
+</div>
+
+<script>
+  var CONFIG = {
+    brand: "The Way Store",
+    whatsapp: "5521988162594",
+    whatsappLabel: "+55 21 98816-2594",
+    shirts: [
+      { name: "Camisa Preta", cor: "preta", color: "#18181a", print: "#f2c230", store: "#f2f2f0", desc: "Preta com estampa dourada nas costas e logo no peito." },
+      { name: "Camisa Branca", cor: "branca", color: "#ecebe7", print: "#151515", store: "#151515", desc: "Branca com estampa preta, simples e fácil de combinar." },
+      { name: "Camisa Amarela", cor: "amarela", color: "#e3b02a", print: "#141414", store: "#141414", desc: "Amarela da marca com estampa preta nas costas." }
+    ]
+  };
+
+  var ZAP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.4-4.2A8.5 8.5 0 1 1 8.3 18.7L4 20Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.2 8.6c.3 2.9 2.6 5.2 5.6 6l1.3-1.4-2-1-.9.8c-.9-.4-1.7-1.2-2.1-2.1l.8-.9-1-2-1.7.6Z" fill="currentColor"/></svg>';
+  function wa(msg) { return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg); }
+
+  /* Logo em vetor: cruz com raios e estrada sinuosa (nítida em qualquer tamanho) */
+  (function () {
+    var N = 44, L = [], R = [], C = [], i, t, x, y, w, rays = "";
+    for (i = 0; i <= N; i++) {
+      t = i / N; y = 114 - 58 * t;
+      x = 60 + 20 * Math.sin(2 * Math.PI * t) * (1 - 0.55 * t);
+      w = (26 * Math.pow(1 - t, 1.25) + 2.4) / 2;
+      L.push((x - w).toFixed(2) + " " + y.toFixed(2)); R.unshift((x + w).toFixed(2) + " " + y.toFixed(2));
+      if (t < 0.82) C.push(x.toFixed(2) + " " + y.toFixed(2));
+    }
+    [-165, -130, -95, -85, -50, -15].forEach(function (a) {
+      var r = a * Math.PI / 180, c = Math.cos(r), s = Math.sin(r);
+      rays += '<path d="M' + (60 + 17 * c).toFixed(1) + " " + (24 + 17 * s).toFixed(1) + "L" + (60 + 24 * c).toFixed(1) + " " + (24 + 24 * s).toFixed(1) + '" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>';
+    });
+    document.getElementById("wm").innerHTML =
+      rays + '<rect x="56.8" y="9" width="6.4" height="50" rx="1" fill="currentColor"/><rect x="46" y="18" width="28" height="6" rx="1" fill="currentColor"/>' +
+      '<path d="M' + L.join("L") + "L" + R.join("L") + 'Z" fill="currentColor"/>' +
+      '<path d="M' + C.join("L") + '" fill="none" stroke="var(--dash)" stroke-width="1.3" stroke-dasharray="4.5 3.5"/>';
+  })();
+
+  ["topzap", "footzap"].forEach(function (id) {
+    var a = document.getElementById(id);
+    a.href = wa("Oi! Vim pelo site da " + CONFIG.brand + " e queria saber mais sobre as camisas.");
+    a.innerHTML = ZAP + "<span>Chamar no WhatsApp</span>";
+  });
+  document.getElementById("footnum").textContent = CONFIG.whatsappLabel;
+
+  var OUT = "M110 24C92 31 72 39 50 50L12 100 56 128 68 112 70 316Q150 328 230 316L232 112 244 128 288 100 250 50C228 39 208 31 190 24";
+  function shirt(d, back, k) {
+    var neck = back ? "Q150 42 110 24Z" : "Q150 70 110 24Z", p = OUT + neck, c = d.color, g = "g" + k;
+    var s = '<svg viewBox="0 -44 300 384" aria-hidden="true"><defs>' +
+      '<clipPath id="c' + k + '"><path d="' + p + '"/></clipPath>' +
+      '<linearGradient id="' + g + 'h" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".34"/><stop offset=".2" stop-color="#000" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".07"/><stop offset=".8" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".34"/></linearGradient>' +
+      '<linearGradient id="' + g + 'v" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".1"/><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".26"/></linearGradient>' +
+      '<linearGradient id="' + g + 'm" x1="0" x2="1"><stop offset="0" stop-color="#e4e4e4"/><stop offset=".5" stop-color="#8d8d8d"/><stop offset="1" stop-color="#d0d0d0"/></linearGradient>' +
+      '<filter id="b' + k + '" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>' +
+      '<filter id="t' + k + '" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="' + (k + 3) + '"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .7 -.2"/></filter></defs>' +
+      /* cabide */
+      '<path d="M150 18V8C150 -4 134 -8 134 -22 134 -34 148 -38 159 -30" fill="none" stroke="url(#' + g + 'm)" stroke-width="3.4" stroke-linecap="round"/>' +
+      '<path d="M150 12 40 62M150 12 260 62" stroke="#8f6e48" stroke-width="7" stroke-linecap="round"/>' +
+      /* tecido */
+      '<path d="' + p + '" fill="' + c + '"/><g clip-path="url(#c' + k + ')">';
+    if (!back) s += '<path d="M113 25Q150 19 187 25Q150 62 113 25Z" fill="#000" opacity=".42"/>';
+    s += '<rect x="0" y="0" width="300" height="340" fill="url(#' + g + 'h)"/><rect x="0" y="0" width="300" height="340" fill="url(#' + g + 'v)"/>' +
+      '<path d="M50 50C62 80 66 100 68 112L56 128 12 100Z" fill="#000" opacity=".12"/><path d="M250 50C238 80 234 100 232 112L244 128 288 100Z" fill="#000" opacity=".12"/>' +
+      '<g filter="url(#b' + k + ')" fill="none" stroke-linecap="round"><path d="M76 134Q96 210 84 304" stroke="#000" stroke-opacity=".2" stroke-width="12"/><path d="M226 134Q206 214 220 304" stroke="#000" stroke-opacity=".2" stroke-width="12"/>' +
+      '<path d="M112 160Q132 220 114 300" stroke="#fff" stroke-opacity=".08" stroke-width="14"/><path d="M180 150Q196 214 188 300" stroke="#fff" stroke-opacity=".06" stroke-width="12"/><path d="M96 126Q150 150 206 124" stroke="#000" stroke-opacity=".13" stroke-width="9"/></g>' +
+      '<rect x="0" y="0" width="300" height="340" filter="url(#t' + k + ')" opacity=".55"/></g>' +
+      /* costuras */
+      '<g fill="none" stroke="#000" stroke-opacity=".3" stroke-width="1" stroke-dasharray="3 3"><path d="M50 50C62 80 66 100 68 112"/><path d="M250 50C238 80 234 100 232 112"/><path d="M17 102L55 125"/><path d="M283 102L245 125"/><path d="M72 309Q150 320 228 309"/></g>' +
+      '<path d="M50 50C62 80 66 100 68 112M250 50C238 80 234 100 232 112" fill="none" stroke="#000" stroke-opacity=".22" stroke-width="1.6"/>' +
+      '<path d="M190 24' + neck.replace("Z", "") + '" fill="none" stroke="' + c + '" stroke-width="8" stroke-linecap="round"/>' +
+      '<path d="M190 24' + neck.replace("Z", "") + '" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="8" stroke-linecap="round"/>' +
+      '<path d="M190 24' + neck.replace("Z", "") + '" fill="none" stroke="#fff" stroke-opacity=".1" stroke-width="2" transform="translate(0 -2)"/>' +
+      '<path d="' + p + '" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1.2" stroke-linejoin="round"/>';
+    if (back) {
+      s += '<rect x="139" y="34" width="22" height="9" rx="1.5" fill="#f4f4f2" opacity=".85"/>' +
+        '<g style="color:' + d.print + ';--dash:' + c + '"><use href="#wm" x="104" y="86" width="92" height="92"/></g>' +
+        '<text x="150" y="204" text-anchor="middle" font-family="Montserrat, Avenir Next, sans-serif" font-weight="800" font-size="25" textLength="112" lengthAdjust="spacingAndGlyphs" fill="' + d.print + '">THE WAY</text>' +
+        '<text x="150" y="220" text-anchor="middle" font-family="Montserrat, Avenir Next, sans-serif" font-weight="600" font-size="9" letter-spacing="6" fill="' + d.store + '">STORE</text>';
+    } else {
+      s += '<g style="color:' + d.print + ';--dash:' + c + '"><use href="#wm" x="176" y="84" width="38" height="38"/></g>';
+    }
+    return s + "</svg>";
+  }
+
+  var grid = document.getElementById("grid");
+  var cards = CONFIG.shirts.map(function (d, i) {
+    var art = document.createElement("article");
+    art.className = "card";
+    art.innerHTML =
+      '<div class="stage" tabindex="0" role="group" aria-label="' + d.name + ': arraste para girar ou use as setas">' +
+        '<div class="rail"></div><div class="hintpill">&#8596; É só arrastar</div><div class="shadow"></div>' +
+        '<div class="bob"><div class="spin"><div class="face front">' + shirt(d, false, i * 2) + '</div><div class="face back">' + shirt(d, true, i * 2 + 1) + '</div></div></div>' +
+      '</div>' +
+      '<div class="info"><h2></h2><p></p>' +
+        '<a class="btn" target="_blank" rel="noopener"></a></div>';
+    art.querySelector("h2").textContent = d.name;
+    art.querySelector("p").textContent = d.desc + " Tamanhos e valores pelo WhatsApp.";
+    var a = art.querySelector(".btn");
+    a.href = wa("Oi! Vi a " + d.name + " (" + d.cor + ") no site da " + CONFIG.brand + " e queria saber mais: tamanhos, valor e como comprar.");
+    a.innerHTML = ZAP + "<span>Perguntar no WhatsApp</span>";
+    grid.appendChild(art);
+    return { stage: art.querySelector(".stage"), spin: art.querySelector(".spin"), shadow: art.querySelector(".shadow"), hint: art.querySelector(".hintpill"),
+      angle: 0, vel: 0, target: 0, drag: false, lastX: 0, lastT: 0 };
+  });
+
+  cards.forEach(function (c) {
+    var st = c.stage;
+    st.addEventListener("pointerdown", function (e) {
+      st.setPointerCapture(e.pointerId); c.drag = true; c.lastX = e.clientX; c.lastT = e.timeStamp; c.vel = 0;
+      st.classList.add("grab"); c.hint.classList.add("gone");
+    });
+    st.addEventListener("pointermove", function (e) {
+      if (!c.drag) return;
+      var dx = e.clientX - c.lastX, dt = (e.timeStamp - c.lastT) / 1000;
+      c.angle += dx * 0.9;
+      if (dt > 0.001) c.vel = c.vel * 0.5 + (dx * 0.9 / dt) * 0.5;
+      c.lastX = e.clientX; c.lastT = e.timeStamp;
+    });
+    function release(e) {
+      if (!c.drag) return;
+      c.drag = false; st.classList.remove("grab");
+      if (e.timeStamp - c.lastT > 90) c.vel = 0;
+      c.vel = Math.max(-1400, Math.min(1400, c.vel));
+      c.target = Math.round((c.angle + c.vel * 0.18) / 180) * 180;
+    }
+    st.addEventListener("pointerup", release);
+    st.addEventListener("pointercancel", release);
+    st.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        e.preventDefault(); c.hint.classList.add("gone");
+        c.target = Math.round(c.angle / 180) * 180 + (e.key === "ArrowRight" ? 180 : -180);
+      }
+    });
+  });
+
+  var last = performance.now();
+  function frame(now) {
+    var dt = Math.min((now - last) / 1000, 0.033); last = now;
+    cards.forEach(function (c) {
+      if (!c.drag) {
+        var acc = (c.target - c.angle) * 130 - c.vel * 13;
+        c.vel += acc * dt; c.angle += c.vel * dt;
+        if (Math.abs(c.target - c.angle) < 0.05 && Math.abs(c.vel) < 1) { c.angle = c.target; c.vel = 0; }
+      }
+      c.spin.style.transform = "rotateY(" + c.angle.toFixed(2) + "deg)";
+      c.shadow.style.transform = "scaleX(" + (0.55 + 0.45 * Math.abs(Math.cos(c.angle * Math.PI / 180))).toFixed(3) + ")";
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+</script>
+</body>
+</html>
